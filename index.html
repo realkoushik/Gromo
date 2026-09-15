@@ -1,38 +1,37 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Gromolabs — Stop Guessing. Know What Wins For Sure.</title>
-<meta name="description" content="Gromolabs builds performance creative systems that guarantee DTC sales growth by reducing CAC. If we miss the target, you pay nothing.">
-<link rel="canonical" href="https://gromolabs.com/">
-<meta property="og:type" content="website">
-<meta property="og:site_name" content="Gromolabs">
-<meta property="og:title" content="Gromolabs — Stop Guessing. Know What Wins For Sure.">
-<meta property="og:description" content="Gromolabs builds performance creative systems that guarantee DTC sales growth by reducing CAC. If we miss the target, you pay nothing.">
-<meta property="og:url" content="https://gromolabs.com/">
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Gromolabs — Stop Guessing. Know What Wins For Sure.">
-<meta name="twitter:description" content="Gromolabs builds performance creative systems that guarantee DTC sales growth by reducing CAC. If we miss the target, you pay nothing.">
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "Organization",
-  "name": "Gromolabs",
-  "url": "https://gromolabs.com/",
-  "description": "Gromolabs builds performance creative systems that guarantee DTC sales growth by reducing CAC.",
-  "areaServed": "Worldwide",
-  "knowsAbout": ["Performance creative", "DTC growth marketing", "AI-assisted ad production", "CAC reduction"]
-}
+        var opacity = 1 - Math.min(Math.abs(clamped), 1.6) * 0.4;
+        card.style.transform = 'perspective(1600px) rotateY(' + rotateY + 'deg) translateZ(' + translateZ + 'px) scale(' + scale + ')';
+        card.style.opacity = String(Math.max(opacity, 0.3));
+        card.style.zIndex = String(100 - Math.round(Math.abs(clamped) * 10));
+      });
+      var active = closestIndex();
+      dots.forEach(function(d, i){ d.classList.toggle('active', i === active); });
+      ticking = false;
+    }
+
+    track.addEventListener('scroll', function(){
+      if(!ticking){ requestAnimationFrame(update); ticking = true; }
+    }, { passive: true });
+    window.addEventListener('resize', update);
+
+    // Map vertical wheel input to horizontal deck movement while hovering the carousel,
+    // so scrolling feels like it drives the cards. Once the deck is at either end,
+    // the event is not intercepted and normal page scroll continues.
+    track.addEventListener('wheel', function(e){
+      var atStart = track.scrollLeft <= 2;
+      var atEnd = track.scrollLeft >= track.scrollWidth - track.clientWidth - 2;
+      var scrollingDown = e.deltaY > 0;
+      if((atStart && !scrollingDown) || (atEnd && scrollingDown)) return; // let the page scroll
+      e.preventDefault();
+      track.scrollLeft += e.deltaY;
+    }, { passive: false });
+
+    prevBtn.addEventListener('click', function(){ scrollToCard(Math.max(closestIndex() - 1, 0)); });
+    nextBtn.addEventListener('click', function(){ scrollToCard(Math.min(closestIndex() + 1, cards.length - 1)); });
+
+    update();
+    scrollToCard(0);
+  })();
 </script>
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "FAQPage",
-  "mainEntity": [
-    {
-      "@type": "Question",
-      "name": "What does \"guaranteed growth\" actually mean?",
-      "acceptedAnswer": { "@type": "Answer", "text": "Before we start, we agree a specific growth target tied to your current spend and CAC. If the account misses that target, you don't pay for the miss. The number is set jointly, not by us alone." }
-    },
-    {
+
+</body>
+</html>
